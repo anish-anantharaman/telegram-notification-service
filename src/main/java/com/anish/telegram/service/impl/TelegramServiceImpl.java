@@ -4,15 +4,15 @@ import com.anish.telegram.config.properties.TelegramProperties;
 import com.anish.telegram.dto.NotificationRequestDto;
 import com.anish.telegram.service.TelegramService;
 import com.anish.telegram.util.Constants;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
 
 import java.net.URI;
 
@@ -27,12 +27,13 @@ public class TelegramServiceImpl implements TelegramService {
 
     private final TelegramProperties telegramProperties;
 
-
     @Override
     @Async("asyncExecutor")
     public void sendTelegramNotification(NotificationRequestDto request) {
+        log.info("Sending telegram notification with payload={}", request);
         ObjectNode payload = buildNotificationRequest(request);
         sendMessage(payload);
+        log.info("Telegram message sent");
     }
 
     private void sendMessage(ObjectNode payload) {
@@ -56,8 +57,9 @@ public class TelegramServiceImpl implements TelegramService {
                 request.subtitle(), request.content());
 
         ObjectNode root = objectMapper.createObjectNode();
-        root.put(Constants.TelegramConstants.CHAT_ID, request.chatId());
+        root.put(Constants.TelegramConstants.CHAT_ID,request.chatId());
         root.put(Constants.CommonConstants.TEXT, text);
+        root.put(Constants.TelegramConstants.PARSE_MODE, "HTML");
 
         ObjectNode replyMarkup = objectMapper.createObjectNode();
         ArrayNode inlineKeyboard = objectMapper.createArrayNode();

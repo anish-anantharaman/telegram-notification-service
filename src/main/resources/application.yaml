@@ -2,9 +2,6 @@ spring:
   application:
     name: telegram
 
-server:
-  port: 8086
-
 telegram:
   base-url: ${TELEGRAM_BASE_URL}
   bot-token: ${BOT_TOKEN}

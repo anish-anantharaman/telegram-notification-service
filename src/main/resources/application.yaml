@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: telegram
+
+telegram:
+  base-url: ${TELEGRAM_BASE_URL}
+  bot-token: ${BOT_TOKEN}

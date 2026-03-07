@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.URL;
 public record NotificationRequestDto(
 
         @NotBlank
-        @Schema(description = "Telegram chat ID of the user to send the message", example = "something")
+        @Schema(description = "Telegram chat ID of the user to send the message", example = "823185487")
         String chatId,
 
         @NotBlank

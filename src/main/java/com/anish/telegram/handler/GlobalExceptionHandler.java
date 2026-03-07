@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
         ApiResponseDto response = new ApiResponseDto(
                 HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 String.valueOf(errors),
                 Boolean.FALSE
         );
@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleServerError(Exception e) {
+        log.error("Server error: {}", e.getMessage(), e);
         ApiResponseDto response = new ApiResponseDto(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),

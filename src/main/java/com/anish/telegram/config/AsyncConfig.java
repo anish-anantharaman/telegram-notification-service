@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
 public class AsyncConfig {
 
     @Bean("asyncExecutor")
-    public Executor AsyncExecutor() {
+    public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(10);
